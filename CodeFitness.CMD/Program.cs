@@ -1,7 +1,8 @@
 ﻿using CodeFitness.BL.Controller;
 using CodeFitness.BL.Model;
 using System;
-
+using System.Globalization;
+using System.Resources;
 
 namespace CodeFitness.CMD
 {
@@ -9,36 +10,38 @@ namespace CodeFitness.CMD
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Вас приветствует приложение CodeFitness");
+            var culture = CultureInfo.CreateSpecificCulture("ru-ru");
+            var resourceManager = new ResourceManager("CodeFitness.CMD.Languages.Messages", typeof(Program).Assembly);
+            Console.WriteLine(resourceManager.GetString("Hello", culture));
             
-            Console.WriteLine("Введите имя пользователя");
+            Console.WriteLine(resourceManager.GetString("EnterName", culture));
             var name = Console.ReadLine();
 
             var userController = new UserController(name);
             var eatingController = new EatingController(userController.CurrentUser);
             if (userController.IsNewUser)
             {
-                Console.WriteLine("Введите пол: ");
+                Console.WriteLine("EnterGender", culture);
                 var gender = Console.ReadLine();
                
                 var birthDate = ParseDateTime();
 
-                var weight = ParseDouble("вес");
+                var weight = ParseDouble(resourceManager.GetString("Weight", culture));
 
-                var height = ParseDouble("рост");
+                var height = ParseDouble(resourceManager.GetString("Height", culture));
 
                 userController.SetNewUserData(gender, birthDate, weight, height);
             }
             Console.WriteLine(userController.CurrentUser);
 
-            Console.WriteLine("Что вы хотите сделать?");
+            Console.WriteLine(resourceManager.GetString("WhatDoing", culture));
             Console.WriteLine("E - ввести прием пищи");
             
             var key = Console.ReadKey();
             Console.WriteLine();
             if (key.Key == ConsoleKey.E)
             {
-                var foods = EnterEating();
+                var foods = EnterEating(culture);
                 eatingController.Add(foods.Food, foods.Weight);
 
                 foreach(var item in eatingController.Eating.Foods)
@@ -51,9 +54,9 @@ namespace CodeFitness.CMD
             Console.ReadLine();
         }
 
-        private static (Food Food, double Weight) EnterEating()
+        private static (Food Food, double Weight) EnterEating(CultureInfo culture)
         {
-            Console.WriteLine("Введите имя продукта: ");
+            Console.WriteLine("EnterNameProduct", culture);
             var food = Console.ReadLine();
         
             var calories = ParseDouble("калорийность");
