@@ -12,14 +12,17 @@ namespace CodeFitness.BL.Model
     [Serializable]
     public class User
     {
+        public int Id { get; set; }
         #region Свойства
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary>
         /// Пол пользователя
         /// </summary>
+
+        public int? GenderId { get; set; }
         public Gender Gender { get; set; }
         /// <summary>
         /// Дата рождения пользователя
@@ -47,6 +50,8 @@ namespace CodeFitness.BL.Model
         /// <param name="birthDate"> Дата рождения </param>
         /// <param name="weight"> Вес </param>
         /// <param name="height"> Рост </param>
+
+        public User(){ }
         public User(string name, Gender gender, DateTime birthDate, double weight, double height)
         {
             #region Проверка

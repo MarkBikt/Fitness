@@ -10,7 +10,7 @@ namespace CodeFitness.CMD
     {
         static void Main(string[] args)
         {
-            var culture = CultureInfo.CreateSpecificCulture("ru-ru");
+            var culture = CultureInfo.CreateSpecificCulture("de-de");
             var resourceManager = new ResourceManager("CodeFitness.CMD.Languages.Messages", typeof(Program).Assembly);
             Console.WriteLine(resourceManager.GetString("Hello", culture));
             
@@ -70,9 +70,7 @@ namespace CodeFitness.CMD
                         break;
 
                 }
-            }
-
-            Console.ReadLine();
+            }           
         }
 
         private static (DateTime begin, DateTime end, Activity activity) EnterExercise()

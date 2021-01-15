@@ -1,4 +1,5 @@
-﻿using CodeFitness.BL.Model;
+﻿
+using CodeFitness.BL.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,6 @@ namespace CodeFitness.BL.Controller
     /// </summary>
     public class UserController : ControllerBase
     {
-        private const string USERS_FILE_NAME = "users.dat";
         /// <summary>
         /// Пользователь приложения
         /// </summary>
@@ -43,8 +43,7 @@ namespace CodeFitness.BL.Controller
             {
                 CurrentUser = new User(userName);
                 Users.Add(CurrentUser);
-                IsNewUser = true;
-                Save();
+                IsNewUser = true;               
             }
             
         }
@@ -64,7 +63,7 @@ namespace CodeFitness.BL.Controller
         /// <returns> Пользователь </returns>
         private List<User> GetUsersData()
         {
-            return Load<List<User>>(USERS_FILE_NAME) ?? new List<User>();       
+            return Load<User>() ?? new List<User>();
         }
 
         /// <summary>
@@ -72,7 +71,7 @@ namespace CodeFitness.BL.Controller
         /// </summary>
         public void Save()
         {
-            Save(USERS_FILE_NAME, Users);
+            Save(Users);
         }
        
     }
